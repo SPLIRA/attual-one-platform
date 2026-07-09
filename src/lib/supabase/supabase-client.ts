@@ -1,5 +1,7 @@
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 
+import { normalizeSupabaseUrl } from "./normalize-supabase-url";
+
 type SupabaseConfig = {
   url: string;
   anonKey: string;
@@ -19,7 +21,7 @@ function getSupabaseConfig(): SupabaseConfig {
     throw new Error("Supabase environment variables are not configured.");
   }
 
-  return { url, anonKey };
+  return { url: normalizeSupabaseUrl(url), anonKey };
 }
 
 export function createSupabaseClient(): SupabaseClient {
