@@ -12,6 +12,7 @@ import { CompanyDetailField } from "@/features/companies/components/company-deta
 import { StatusBadge } from "@/features/companies/components/status-badge";
 import { getCompanyById } from "@/features/companies/services/company-service";
 import type { CompanyDetails } from "@/features/companies/types";
+import { HistorySection } from "@/features/history/components/history-section";
 
 export default function CompanyDetailsPage() {
   const params = useParams<{ companyId: string }>();
@@ -90,13 +91,12 @@ export default function CompanyDetailsPage() {
             >
               Nova Visita
             </Link>
-            <button
-              type="button"
-              disabled
-              className="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-md border border-slate-300 px-5 text-base font-semibold text-slate-400"
+            <a
+              href="#historico"
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-slate-300 bg-white px-5 text-base font-semibold text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300"
             >
               Historico
-            </button>
+            </a>
           </div>
 
           <dl className="grid gap-3 sm:grid-cols-2">
@@ -124,6 +124,8 @@ export default function CompanyDetailsPage() {
             />
             <CompanyDetailField label="Observacoes" value={company.notes} />
           </dl>
+
+          <HistorySection companyId={company.id} />
         </>
       ) : null}
     </PageShell>
