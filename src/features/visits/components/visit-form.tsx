@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { FeedbackMessage } from "@/components/ui/feedback-message";
 
@@ -23,7 +23,7 @@ export function VisitForm({
   onCancel,
   onSubmit,
 }: VisitFormProps) {
-  const visitDate = useMemo(() => new Date().toISOString(), []);
+  const [visitDate] = useState(() => new Date().toISOString());
   const [responsibleName, setResponsibleName] = useState("");
   const [durationMinutes, setDurationMinutes] = useState<VisitDurationMinutes>(30);
   const [initialNotes, setInitialNotes] = useState("");
@@ -31,10 +31,15 @@ export function VisitForm({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSaving) {
+      return;
+    }
+
     setError(null);
 
     if (!responsibleName.trim()) {
-      setError("Informe o responsavel pela visita.");
+      setError("Informe o responsável pela visita.");
       return;
     }
 
@@ -49,7 +54,7 @@ export function VisitForm({
       });
     } catch (submitError) {
       setError(
-        submitError instanceof Error ? submitError.message : "Nao foi possivel iniciar a visita.",
+        submitError instanceof Error ? submitError.message : "Não foi possível iniciar a visita.",
       );
     }
   }
@@ -81,7 +86,7 @@ export function VisitForm({
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-slate-800">Responsavel pela visita *</span>
+          <span className="text-sm font-medium text-slate-800">Responsável pela visita *</span>
           <input
             value={responsibleName}
             onChange={(event) => setResponsibleName(event.target.value)}
@@ -111,7 +116,7 @@ export function VisitForm({
         </fieldset>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-slate-800">Observacoes iniciais</span>
+          <span className="text-sm font-medium text-slate-800">Observações iniciais</span>
           <textarea
             value={initialNotes}
             onChange={(event) => setInitialNotes(event.target.value)}

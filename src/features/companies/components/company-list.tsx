@@ -69,10 +69,10 @@ export function CompanyList({ companies }: CompanyListProps) {
                 </div>
 
                 <p className="hidden text-sm text-slate-700 lg:block">
-                  {company.segment || "Nao informado"}
+                  {company.segment || "Não informado"}
                 </p>
                 <p className="hidden text-sm text-slate-700 lg:block">
-                  {company.city || "Nao informada"}
+                  {company.city || "Não informada"}
                 </p>
 
                 <StatusBadge status={company.status} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import { FeedbackMessage } from "@/components/ui/feedback-message";
 
@@ -24,6 +24,15 @@ const answerOptions: Array<{
   { value: "no", label: "❌ Não" },
 ];
 
+const questionsBySection = diagnosisQuestions.reduce<Record<string, typeof diagnosisQuestions>>(
+  (sections, question) => {
+    sections[question.section] = [...(sections[question.section] ?? []), question];
+
+    return sections;
+  },
+  {},
+);
+
 export function DiagnosisChecklistForm({
   companyId,
   visitId,
@@ -35,17 +44,6 @@ export function DiagnosisChecklistForm({
   const [observations, setObservations] = useState("");
   const [error, setError] = useState<string | null>(null);
 
-  const questionsBySection = useMemo(() => {
-    return diagnosisQuestions.reduce<Record<string, typeof diagnosisQuestions>>(
-      (sections, question) => {
-        sections[question.section] = [...(sections[question.section] ?? []), question];
-
-        return sections;
-      },
-      {},
-    );
-  }, []);
-
   function updateAnswer(questionId: string, answer: DiagnosisAnswer) {
     setAnswers((currentAnswers) => ({
       ...currentAnswers,
@@ -55,6 +53,11 @@ export function DiagnosisChecklistForm({
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSaving) {
+      return;
+    }
+
     setError(null);
 
     const hasMissingAnswer = diagnosisQuestions.some((question) => !answers[question.id]);
@@ -91,7 +94,7 @@ export function DiagnosisChecklistForm({
           </div>
 
           <div className="divide-y divide-slate-200">
-            {questions.map((question, index) => (
+            {questions.map((question) => (
               <fieldset key={question.id} className="px-4 py-5">
                 <legend className="text-base font-medium text-slate-950">
                   {diagnosisQuestions.findIndex((item) => item.id === question.id) + 1}.{" "}

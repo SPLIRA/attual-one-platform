@@ -29,7 +29,7 @@ export default function NewVisitPage() {
         setCompany(await getCompanyById(params.companyId));
       } catch (loadError) {
         setError(
-          loadError instanceof Error ? loadError.message : "Nao foi possivel carregar a empresa.",
+          loadError instanceof Error ? loadError.message : "Não foi possível carregar a empresa.",
         );
       } finally {
         setIsLoading(false);

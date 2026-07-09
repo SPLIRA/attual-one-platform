@@ -42,7 +42,7 @@ export default function CompaniesPage() {
         setCompanies(await listCompanies());
       } catch (loadError) {
         setError(
-          loadError instanceof Error ? loadError.message : "Nao foi possivel carregar empresas.",
+          loadError instanceof Error ? loadError.message : "Não foi possível carregar empresas.",
         );
       } finally {
         setIsLoading(false);

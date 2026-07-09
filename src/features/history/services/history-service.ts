@@ -123,21 +123,27 @@ function buildHistoryItem(
 }
 
 function parseResponsibleName(notes: string | null) {
-  return parseLineValue(notes, "Responsavel pela visita:");
+  return parseLineValue(notes, ["Responsável pela visita:", "Responsavel pela visita:"]);
 }
 
 function parseInitialNotes(notes: string | null) {
-  return parseLineValue(notes, "Observacoes iniciais:");
+  return parseLineValue(notes, ["Observações iniciais:", "Observacoes iniciais:"]);
 }
 
-function parseLineValue(notes: string | null, prefix: string) {
+function parseLineValue(notes: string | null, prefixes: string[]) {
   if (!notes) {
     return null;
   }
 
-  const line = notes.split("\n").find((item) => item.startsWith(prefix));
+  for (const prefix of prefixes) {
+    const line = notes.split("\n").find((item) => item.startsWith(prefix));
 
-  return line?.replace(prefix, "").trim() || null;
+    if (line) {
+      return line.replace(prefix, "").trim() || null;
+    }
+  }
+
+  return null;
 }
 
 function parseChecklist(summary: string | null | undefined): VisitDiagnosisAnswer[] {

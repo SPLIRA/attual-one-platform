@@ -8,17 +8,40 @@ O formato segue uma adaptacao simples de Keep a Changelog.
 
 ### Added
 
-- Estrutura documental profissional do projeto.
-- Documentos de arquitetura, roadmap, changelog e decisoes.
-- Pastas de documentacao por area em `docs/`.
+- Fluxo de empresas com listagem, cadastro, detalhe e edicao.
+- Criacao de visitas.
+- Checklist de diagnostico com 12 perguntas.
+- Historico simples da empresa com visitas e diagnosticos.
+- Componentes visuais compartilhados para cabecalho, mensagens, loading e estrutura de pagina.
 
 ### Changed
 
-- Nenhuma mudanca funcional.
+- Padronizacao visual mobile-first das telas do MVP.
+- Melhorias em mensagens, validacoes, botoes, estados vazios e carregamento.
+- Revisao final de navegacao, formularios, Supabase e build.
 
 ### Removed
 
 - Nada removido.
+
+## [0.1.0] - MVP
+
+### Added
+
+- Modulo de empresas.
+- Modulo de visitas.
+- Modulo de diagnostico.
+- Historico da empresa.
+- Integracao com Supabase usando `companies`, `visits` e `diagnoses`.
+
+### Notes
+
+- Sem login.
+- Sem IA.
+- Sem PDF.
+- Sem dashboard avancado.
+- Sem graficos.
+- Sem upload de fotos ou audio.
 
 ## [0.1.0] - Fundacao
 

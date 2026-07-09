@@ -4,14 +4,14 @@ import type { CreateVisitInput } from "../types";
 
 function buildVisitNotes(input: CreateVisitInput) {
   const notes = [
-    `Responsavel pela visita: ${input.responsibleName.trim()}`,
+    `Responsável pela visita: ${input.responsibleName.trim()}`,
     `Tempo previsto: ${input.durationMinutes} min`,
   ];
 
   const initialNotes = input.initialNotes.trim();
 
   if (initialNotes) {
-    notes.push(`Observacoes iniciais: ${initialNotes}`);
+    notes.push(`Observações iniciais: ${initialNotes}`);
   }
 
   return notes.join("\n");
@@ -21,7 +21,7 @@ export async function createVisit(input: CreateVisitInput): Promise<string> {
   const responsibleName = input.responsibleName.trim();
 
   if (!responsibleName) {
-    throw new Error("Informe o responsavel pela visita.");
+    throw new Error("Informe o responsável pela visita.");
   }
 
   const { data, error } = await createSupabaseClient()

@@ -5,7 +5,7 @@ type CompanyDetailFieldProps = {
 };
 
 export function CompanyDetailField({ label, value, href }: CompanyDetailFieldProps) {
-  const displayValue = value || "Nao informado";
+  const displayValue = value || "Não informado";
 
   return (
     <div className="rounded-md border border-slate-200 bg-white px-4 py-4 shadow-sm">

@@ -21,33 +21,43 @@ Status: concluida.
 
 ## Fase 1 - Planejamento De Produto
 
-Status: pendente.
+Status: concluida para o MVP v0.1.
 
-- Definir PRD.
-- Definir publico-alvo.
-- Definir objetivos de negocio.
-- Definir jornadas principais.
-- Definir identidade visual.
-- Definir requisitos de dados sem criar banco.
+- PRD inicial documentado.
+- Jornada principal de empresas, visitas e diagnostico definida.
+- Modelo conceitual de dados documentado.
+- UX do fluxo MVP documentada.
 
 ## Fase 2 - Design E Contratos
 
-Status: pendente.
+Status: concluida para o MVP v0.1.
 
-- Mapear fluxos de UX.
-- Definir contratos de API.
-- Definir modelo conceitual de dados.
-- Definir componentes de design system.
-- Registrar decisoes arquiteturais.
+- Fluxos principais mapeados.
+- Estrutura Supabase utilizada para `companies`, `visits` e `diagnoses`.
+- Componentes visuais basicos padronizados.
+- Decisoes arquiteturais iniciais registradas.
 
 ## Fase 3 - Implementacao Controlada
 
+Status: concluida para o MVP v0.1.
+
+- Cadastro, listagem, detalhe e edicao de empresas.
+- Criacao de visitas.
+- Checklist de diagnostico.
+- Historico simples da empresa.
+- Revisao final de navegacao, interface, validacoes e build.
+
+## Fase 4 - Pos-MVP
+
 Status: futura.
 
-- Implementar funcionalidades somente apos aprovacao de escopo.
-- Criar banco somente apos aprovacao do modelo de dados.
-- Criar autenticacao somente apos aprovacao dos requisitos de acesso.
-- Criar telas somente apos aprovacao de UX e branding.
+- Autenticacao.
+- Permissoes e multiempresa real.
+- Relatorios.
+- PDF.
+- Uploads.
+- Melhorias de dashboard.
+- Automacoes e integracoes.
 
 ## Criterios De Governanca
 

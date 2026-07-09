@@ -26,6 +26,11 @@ export function CompanyForm({ initialValues, submitLabel, isSaving, onSubmit }: 
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (isSaving) {
+      return;
+    }
+
     setError(null);
 
     if (!form.name.trim()) {
@@ -42,7 +47,7 @@ export function CompanyForm({ initialValues, submitLabel, isSaving, onSubmit }: 
       await onSubmit(form);
     } catch (submitError) {
       setError(
-        submitError instanceof Error ? submitError.message : "Nao foi possivel salvar a empresa.",
+        submitError instanceof Error ? submitError.message : "Não foi possível salvar a empresa.",
       );
     }
   }
@@ -119,7 +124,7 @@ export function CompanyForm({ initialValues, submitLabel, isSaving, onSubmit }: 
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-slate-800">Endereco</span>
+          <span className="text-sm font-medium text-slate-800">Endereço</span>
           <input
             value={form.address}
             onChange={(event) => updateField("address", event.target.value)}
@@ -139,7 +144,7 @@ export function CompanyForm({ initialValues, submitLabel, isSaving, onSubmit }: 
         </label>
 
         <label className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-slate-800">Observacoes</span>
+          <span className="text-sm font-medium text-slate-800">Observações</span>
           <textarea
             value={form.notes}
             onChange={(event) => updateField("notes", event.target.value)}

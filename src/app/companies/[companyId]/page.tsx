@@ -49,7 +49,7 @@ export default function CompanyDetailsPage() {
         setCompany(await getCompanyById(params.companyId));
       } catch (loadError) {
         setError(
-          loadError instanceof Error ? loadError.message : "Nao foi possivel carregar a empresa.",
+          loadError instanceof Error ? loadError.message : "Não foi possível carregar a empresa.",
         );
       } finally {
         setIsLoading(false);
@@ -95,7 +95,7 @@ export default function CompanyDetailsPage() {
               href="#historico"
               className="inline-flex min-h-12 items-center justify-center rounded-md border border-slate-300 bg-white px-5 text-base font-semibold text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300"
             >
-              Historico
+              Histórico
             </a>
           </div>
 
@@ -115,14 +115,14 @@ export default function CompanyDetailsPage() {
               href={normalizeExternalUrl(company.website)}
             />
             <CompanyDetailField label="Cidade" value={company.city} />
-            <CompanyDetailField label="Endereco" value={company.address} />
+            <CompanyDetailField label="Endereço" value={company.address} />
             <CompanyDetailField label="Última visita" value={formatDate(company.lastVisitAt)} />
             <CompanyDetailField label="Data da visita" value={formatDate(company.lastVisitAt)} />
             <CompanyDetailField
               label="Status"
               value={company.latestDiagnosisAt ? "Diagnóstico concluído" : "Diagnóstico pendente"}
             />
-            <CompanyDetailField label="Observacoes" value={company.notes} />
+            <CompanyDetailField label="Observações" value={company.notes} />
           </dl>
 
           <HistorySection companyId={company.id} />
