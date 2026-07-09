@@ -1,9 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+import { PageHeader } from "@/components/ui/page-header";
+import { PageShell } from "@/components/ui/page-shell";
 import { CompanyForm } from "@/features/companies/components/company-form";
 import { createCompany } from "@/features/companies/services/company-service";
 import type { CompanyFormInput } from "@/features/companies/types";
@@ -35,19 +36,12 @@ export default function NewCompanyPage() {
   }
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-2xl flex-col gap-6 px-4 py-6 sm:px-6">
-      <header className="flex flex-col gap-2">
-        <Link
-          href="/"
-          className="text-sm font-medium text-slate-600 underline-offset-4 hover:underline"
-        >
-          Voltar
-        </Link>
-        <h1 className="text-3xl font-semibold text-slate-950">Nova Empresa</h1>
-        <p className="text-sm text-slate-600">
-          Cadastre os dados basicos para iniciar o diagnostico.
-        </p>
-      </header>
+    <PageShell size="narrow">
+      <PageHeader
+        title="Nova Empresa"
+        description="Cadastre os dados básicos para iniciar o diagnóstico."
+        backHref="/companies"
+      />
 
       <CompanyForm
         initialValues={initialFormState}
@@ -55,6 +49,6 @@ export default function NewCompanyPage() {
         isSaving={isSaving}
         onSubmit={handleSubmit}
       />
-    </main>
+    </PageShell>
   );
 }

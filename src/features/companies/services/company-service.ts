@@ -1,5 +1,7 @@
 import { createSupabaseClient } from "@/lib/supabase";
 
+import { listLatestDiagnosesByCompanyId } from "@/features/diagnoses/services/diagnosis-service";
+
 import type {
   CompanyDetails,
   CompanyListItem,
@@ -26,13 +28,14 @@ export async function listCompanies(): Promise<CompanyListItem[]> {
   }
 
   const companies = data ?? [];
-  const lastVisitsByCompanyId = await listLastVisitsByCompanyId(
-    companies.map((company) => company.id),
-  );
+  const companyIds = companies.map((company) => company.id);
+  const lastVisitsByCompanyId = await listLastVisitsByCompanyId(companyIds);
+  const latestDiagnosesByCompanyId = await listLatestDiagnosesByCompanyId(companyIds);
 
   return companies.map((company) => ({
     ...company,
     lastVisitAt: lastVisitsByCompanyId.get(company.id) ?? null,
+    latestDiagnosisAt: latestDiagnosesByCompanyId.get(company.id) ?? null,
   }));
 }
 
@@ -50,10 +53,12 @@ export async function getCompanyById(companyId: string): Promise<CompanyDetails>
   }
 
   const lastVisitsByCompanyId = await listLastVisitsByCompanyId([companyId]);
+  const latestDiagnosesByCompanyId = await listLatestDiagnosesByCompanyId([companyId]);
 
   return {
     ...data,
     lastVisitAt: lastVisitsByCompanyId.get(companyId) ?? null,
+    latestDiagnosisAt: latestDiagnosesByCompanyId.get(companyId) ?? null,
   };
 }
 

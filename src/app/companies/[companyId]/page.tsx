@@ -4,6 +4,10 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { FeedbackMessage } from "@/components/ui/feedback-message";
+import { LoadingState } from "@/components/ui/loading-state";
+import { PageHeader } from "@/components/ui/page-header";
+import { PageShell } from "@/components/ui/page-shell";
 import { CompanyDetailField } from "@/features/companies/components/company-detail-field";
 import { StatusBadge } from "@/features/companies/components/status-badge";
 import { getCompanyById } from "@/features/companies/services/company-service";
@@ -26,6 +30,10 @@ export default function CompanyDetailsPage() {
 
     if (message === "updated") {
       setSuccessMessage("Empresa atualizada com sucesso.");
+    }
+
+    if (message === "diagnosis-saved") {
+      setSuccessMessage("Diagnóstico salvo com sucesso.");
     }
 
     if (message) {
@@ -51,42 +59,22 @@ export default function CompanyDetailsPage() {
   }, [params.companyId]);
 
   return (
-    <main className="mx-auto flex min-h-dvh w-full max-w-5xl flex-col gap-6 px-4 py-6 sm:px-6 lg:px-8">
-      <header className="flex flex-col gap-4">
-        <Link
-          href="/companies"
-          className="text-sm font-medium text-slate-600 underline-offset-4 hover:underline"
-        >
-          Voltar para empresas
-        </Link>
+    <PageShell size="wide">
+      <PageHeader
+        eyebrow="Empresa"
+        title={company?.name ?? "Detalhes da empresa"}
+        description="Dados principais, última visita e status do diagnóstico."
+        backHref="/companies"
+        backLabel="Voltar para empresas"
+        actions={company ? <StatusBadge status={company.status} /> : null}
+      />
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-sm font-medium uppercase tracking-wide text-slate-500">Empresa</p>
-            <h1 className="text-3xl font-semibold text-slate-950">
-              {company?.name ?? "Detalhes da empresa"}
-            </h1>
-          </div>
-          {company ? <StatusBadge status={company.status} /> : null}
-        </div>
-      </header>
+      {successMessage ? <FeedbackMessage tone="success">{successMessage}</FeedbackMessage> : null}
 
-      {successMessage ? (
-        <p className="rounded-md border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-800">
-          {successMessage}
-        </p>
-      ) : null}
-
-      {error ? (
-        <p className="rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-800">
-          {error}
-        </p>
-      ) : null}
+      {error ? <FeedbackMessage tone="error">{error}</FeedbackMessage> : null}
 
       {isLoading ? (
-        <section className="rounded-md border border-slate-200 bg-white px-4 py-8 text-sm text-slate-600">
-          Carregando empresa...
-        </section>
+        <LoadingState>Carregando empresa...</LoadingState>
       ) : company ? (
         <>
           <div className="grid gap-3 sm:grid-cols-3">
@@ -96,13 +84,12 @@ export default function CompanyDetailsPage() {
             >
               Editar Empresa
             </Link>
-            <button
-              type="button"
-              disabled
-              className="inline-flex min-h-12 cursor-not-allowed items-center justify-center rounded-md border border-slate-300 px-5 text-base font-semibold text-slate-400"
+            <Link
+              href={`/companies/${company.id}/visit/new`}
+              className="inline-flex min-h-12 items-center justify-center rounded-md border border-slate-300 bg-white px-5 text-base font-semibold text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300"
             >
               Nova Visita
-            </button>
+            </Link>
             <button
               type="button"
               disabled
@@ -129,12 +116,17 @@ export default function CompanyDetailsPage() {
             />
             <CompanyDetailField label="Cidade" value={company.city} />
             <CompanyDetailField label="Endereco" value={company.address} />
-            <CompanyDetailField label="Ultima visita" value={formatDate(company.lastVisitAt)} />
+            <CompanyDetailField label="Última visita" value={formatDate(company.lastVisitAt)} />
+            <CompanyDetailField label="Data da visita" value={formatDate(company.lastVisitAt)} />
+            <CompanyDetailField
+              label="Status"
+              value={company.latestDiagnosisAt ? "Diagnóstico concluído" : "Diagnóstico pendente"}
+            />
             <CompanyDetailField label="Observacoes" value={company.notes} />
           </dl>
         </>
       ) : null}
-    </main>
+    </PageShell>
   );
 }
 

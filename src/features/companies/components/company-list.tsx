@@ -35,11 +35,11 @@ export function CompanyList({ companies }: CompanyListProps) {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Nome, cidade ou segmento"
-          className="min-h-12 rounded-md border border-slate-300 bg-white px-3 text-base outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
+          className="min-h-14 rounded-md border border-slate-300 bg-white px-4 text-base outline-none focus:border-slate-950 focus:ring-2 focus:ring-slate-200"
         />
       </label>
 
-      <div className="overflow-hidden rounded-md border border-slate-200 bg-white">
+      <div className="overflow-hidden rounded-md border border-slate-200 bg-white shadow-sm">
         <div className="hidden grid-cols-[1.3fr_1fr_1fr_0.8fr_1fr_96px] gap-3 border-b border-slate-200 bg-slate-50 px-4 py-3 text-xs font-semibold uppercase tracking-wide text-slate-500 lg:grid">
           <span>Nome</span>
           <span>Segmento</span>
@@ -58,7 +58,7 @@ export function CompanyList({ companies }: CompanyListProps) {
             {filteredCompanies.map((company) => (
               <li
                 key={company.id}
-                className="grid gap-3 px-4 py-4 lg:grid-cols-[1.3fr_1fr_1fr_0.8fr_1fr_96px] lg:items-center"
+                className="grid gap-3 px-4 py-5 lg:grid-cols-[1.3fr_1fr_1fr_0.8fr_1fr_96px] lg:items-center"
               >
                 <div>
                   <p className="text-base font-semibold text-slate-950">{company.name}</p>
@@ -84,7 +84,7 @@ export function CompanyList({ companies }: CompanyListProps) {
 
                 <Link
                   href={`/companies/${company.id}`}
-                  className="inline-flex min-h-11 items-center justify-center rounded-md border border-slate-300 px-4 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 lg:min-h-10"
+                  className="inline-flex min-h-12 items-center justify-center rounded-md border border-slate-300 px-4 text-sm font-semibold text-slate-900 transition hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-300 lg:min-h-10"
                 >
                   Abrir
                 </Link>

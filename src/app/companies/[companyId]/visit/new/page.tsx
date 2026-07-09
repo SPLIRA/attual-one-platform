@@ -7,11 +7,13 @@ import { FeedbackMessage } from "@/components/ui/feedback-message";
 import { LoadingState } from "@/components/ui/loading-state";
 import { PageHeader } from "@/components/ui/page-header";
 import { PageShell } from "@/components/ui/page-shell";
-import { CompanyForm } from "@/features/companies/components/company-form";
-import { getCompanyById, updateCompany } from "@/features/companies/services/company-service";
-import type { CompanyDetails, CompanyFormInput } from "@/features/companies/types";
+import { getCompanyById } from "@/features/companies/services/company-service";
+import type { CompanyDetails } from "@/features/companies/types";
+import { VisitForm } from "@/features/visits/components/visit-form";
+import { createVisit } from "@/features/visits/services/visit-service";
+import type { CreateVisitInput } from "@/features/visits/types";
 
-export default function EditCompanyPage() {
+export default function NewVisitPage() {
   const params = useParams<{ companyId: string }>();
   const router = useRouter();
   const [company, setCompany] = useState<CompanyDetails | null>(null);
@@ -37,11 +39,11 @@ export default function EditCompanyPage() {
     void loadCompany();
   }, [params.companyId]);
 
-  async function handleSubmit(input: CompanyFormInput) {
+  async function handleSubmit(input: CreateVisitInput) {
     try {
       setIsSaving(true);
-      await updateCompany(params.companyId, input);
-      router.push(`/companies/${params.companyId}?message=updated`);
+      const visitId = await createVisit(input);
+      router.push(`/companies/${params.companyId}/visit/${visitId}/diagnosis`);
     } finally {
       setIsSaving(false);
     }
@@ -50,9 +52,10 @@ export default function EditCompanyPage() {
   return (
     <PageShell size="narrow">
       <PageHeader
-        title="Editar Empresa"
-        description="Atualize os dados básicos da empresa."
+        title="Nova Visita"
+        description="Prepare o início do fluxo de diagnóstico."
         backHref={`/companies/${params.companyId}`}
+        backLabel="Voltar para empresa"
       />
 
       {error ? <FeedbackMessage tone="error">{error}</FeedbackMessage> : null}
@@ -60,27 +63,14 @@ export default function EditCompanyPage() {
       {isLoading ? (
         <LoadingState>Carregando empresa...</LoadingState>
       ) : company ? (
-        <CompanyForm
-          initialValues={companyToFormInput(company)}
-          submitLabel="Salvar alteracoes"
+        <VisitForm
+          companyId={company.id}
+          companyName={company.name}
           isSaving={isSaving}
+          onCancel={() => router.push(`/companies/${params.companyId}`)}
           onSubmit={handleSubmit}
         />
       ) : null}
     </PageShell>
   );
-}
-
-function companyToFormInput(company: CompanyDetails): CompanyFormInput {
-  return {
-    name: company.name,
-    segment: company.segment ?? "",
-    phone: company.phone ?? "",
-    whatsapp: company.whatsapp ?? "",
-    instagram: company.instagram ?? "",
-    website: company.website ?? "",
-    address: company.address ?? "",
-    city: company.city ?? "",
-    notes: company.notes ?? "",
-  };
 }

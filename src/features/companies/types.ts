@@ -5,6 +5,7 @@ export type CompanyListItem = {
   city: string | null;
   status: string | null;
   lastVisitAt: string | null;
+  latestDiagnosisAt: string | null;
   created_at: string | null;
 };
 
