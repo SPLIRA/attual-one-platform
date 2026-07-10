@@ -10,14 +10,19 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: {
-    default: "ATTUAL ONE Insight",
-    template: "%s | ATTUAL ONE Insight",
+    default: "ATTUAL ONE",
+    template: "%s | ATTUAL ONE",
   },
-  description: "Cadastro basico de empresas do ATTUAL ONE Insight.",
+  description: "Diagnóstico comercial e gestão de visitas da TV Attual.",
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
 };
 
+
 export const viewport: Viewport = {
-  themeColor: "#0f172a",
+  themeColor: "#0B2D4D",
 };
 
 type RootLayoutProps = Readonly<{
